@@ -10,3 +10,7 @@ venv/
 # OS/editor
 .DS_Store
 .vscode/
+
+build/
+dist/
+installer_output/

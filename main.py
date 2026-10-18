@@ -9,7 +9,8 @@ Then open:
 
 No database, accounts, or login. Chat history remains in the browser.
 """
-
+import threading
+import webbrowser
 import json
 import logging
 import os
@@ -356,4 +357,20 @@ app.mount("/", StaticFiles(directory=str(BASE_DIR), html=True), name="frontend")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", "8000")), reload=True)
+
+    host = "127.0.0.1"
+    port = int(os.getenv("PORT", "8000"))
+
+    threading.Timer(
+        1.5,
+        lambda: webbrowser.open(f"http://{host}:{port}")
+    ).start()
+
+    uvicorn.run(
+    app,
+    host=host,
+    port=port,
+    reload=False,
+    log_config=None,
+    access_log=False
+)
